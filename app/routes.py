@@ -42,3 +42,11 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+@main.route('/testbed_health')
+def testbed_health():
+    return render_template('testbed_health.html')
+
+@main.route('/testbed_reservation')
+def testbed_reservation():
+    return render_template('testbed_reservation.html')
