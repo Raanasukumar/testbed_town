@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from app import db
+from app.models import db
 from app.models import User
 from app.forms import RegistrationForm, LoginForm
 from flask_login import login_user, logout_user, login_required
@@ -42,3 +42,11 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+@main.route('/testbed_health')
+def testbed_health():
+    return render_template('testbed_health.html')
+
+@main.route('/testbed_reservation')
+def testbed_reservation():
+    return render_template('testbed_reservation.html')
