@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1 class="display-4">Welcome to Testbed Town</h1>
+    <p class="lead">Experience the best network testing environment.</p>
+
+    {% if user.is_authenticated %}
+        <h3 class="mt-4">Hello, {{ user.username }}! 👋</h3>
+        <a href="{{ url_for('main.index') }}" class="btn btn-success btn-lg mt-3">Go to Dashboard</a>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-lg mt-3">Logout</a>
+    {% else %}
+        <div class="mt-4">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-secondary btn-lg">Register</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
