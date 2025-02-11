@@ -1,29 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Welcome to Testbed Town!</h1>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('main.home') }}">Testbed Town</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.testbed_health') }}">Testbed Health</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.testbed_reservation') }}">Testbed Reservation</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-                {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome, {{ current_user.username }}</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
-                  </li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-</nav>
+
+<div class="user-dashboard">
+    <h2>User Dashboard</h2>
+    <p><strong>Email:</strong> {{ current_user.email }}</p>
+    <p><strong>Logged in at:</strong> {{ current_user.logged_in_time }}</p>
+    
+    <h3>Your Reservations</h3>
+    <ul>
+        {% for reservation in current_user.reservations %}
+        <li>{{ reservation }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
 {% endblock %}

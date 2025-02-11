@@ -17,7 +17,7 @@ def login():
             login_user(user)
             session['username'] = user.username
             flash('Login successful!', category='success')
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.home'))
         else:
             flash('Invalid email or password.', category='error')
 

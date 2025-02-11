@@ -1,41 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testbed Health</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-4">
-        <h2>Testbed Health</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Device Name</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for key, device in devices.items() %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ device.ip }}</td>
-                    <td>{{ device.type }}</td>
-                    <td>{{ device.status }}</td>
-                    <td>
-                        {% if device.status == 'Active' %}
-                            <span class="badge bg-success">{{ device.status }}</span>
-                        {% else %}
-                            <span class="badge bg-danger">{{ device.status }}</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Welcome, {{ current_user.username }}!</h2>
+    <p>Please choose a testbed from the dropdown menu below:</p>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Choose Testbed
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for file in testbed_files %}
+            <li><a class="dropdown-item" href="#" data-file="{{ file }}">{{ file }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
-</body>
-</html>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+                const file = this.getAttribute('data-file');
+                window.location.href = `/testbed_health_device?file=${file}`;
+            });
+        });
+    });
+</script>
+{% endblock %}

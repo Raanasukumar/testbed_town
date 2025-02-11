@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Add Topology</h2>
+    <form action="{{ url_for('main.add_topology') }}" method="post">
+        <div class="mb-3">
+            <label for="testbed_id" class="form-label">Testbed ID</label> 
+            <input type="text" class="form-control" id="testbed_id" name="testbed_id" required>
+        </div>
+        <div class="mb-3">
+            <label for="topology_name" class="form-label">Topology Name</label>
+            <input type="text" class="form-control" id="topology_name" name="topology_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Topology description</label>
+            <input type="text" class="form-control" id="description" name="description" required>
+        </div>
+        <div class="mb-3">
+            <label for="contact" class="form-label">Contact Owner</label>
+            <input type="text" class="form-control" id="contact" name="contact" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Topology</button>
+    </form>
+    
+
+{% endblock %}

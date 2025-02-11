@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Configure Fields</h2>
+    
+    <!-- Field selection form -->
+    <div class="mb-3">
+        <label for="field_name" class="form-label">Field Name</label>
+        <input type="text" id="field_name" class="form-control">
+        <button class="btn btn-secondary mt-2" onclick="addField()">Add Field</button>
+    </div>
+
+    <!-- Main form -->
+    <h2 class="mt-4">Add Topology</h2>
+    <form action="{{ url_for('main.configuration') }}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="topology_name" class="form-label">Topology Name</label>
+            <input type="text" class="form-control" id="topology_name" name="topology_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="topology_file" class="form-label">Topology File</label>
+            <input type="file" class="form-control" id="topology_file" name="topology_file" required>
+        </div>
+
+        <!-- Dynamic fields container -->
+        <div id="dynamic-fields"></div>
+
+        <button type="submit" class="btn btn-primary mt-3">Add Topology</button>
+    </form>
+</div>
+
+<script>
+    function addField() {
+        var fieldName = document.getElementById("field_name").value.trim();
+        if (fieldName === "") {
+            alert("Field name cannot be empty!");
+            return;
+        }
+
+        // Create input field
+        var inputDiv = document.createElement("div");
+        inputDiv.classList.add("mb-3");
+
+        var label = document.createElement("label");
+        label.classList.add("form-label");
+        label.innerText = fieldName;
+        label.setAttribute("for", fieldName);
+
+        var input = document.createElement("input");
+        input.classList.add("form-control");
+        input.type = "text";
+        input.name = fieldName;
+        input.id = fieldName;
+
+        // Append elements
+        inputDiv.appendChild(label);
+        inputDiv.appendChild(input);
+        document.getElementById("dynamic-fields").appendChild(inputDiv);
+
+        // Clear the input box
+        document.getElementById("field_name").value = "";
+    }
+</script>
+
+{% endblock %}

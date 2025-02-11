@@ -19,9 +19,6 @@ class User(db.Model, UserMixin):
     @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)  # Hashing password
-    
-    # def set_password(self, password):
-    #     self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -29,3 +26,23 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
+
+class Testbed(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(200), nullable=True)
+    contact_owner = db.Column(db.String(100), nullable=False)
+    reserved = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return f'<Testbed {self.name}>'
+
+# ✅ Add TopologyField model
+class TopologyField(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    topology_id = db.Column(db.Integer, db.ForeignKey('testbed.id'), nullable=False)
+    field_name = db.Column(db.String(100), nullable=False)
+    field_value = db.Column(db.String(255), nullable=True)
+
+    def __repr__(self):
+        return f'<TopologyField {self.field_name}: {self.field_value}>'

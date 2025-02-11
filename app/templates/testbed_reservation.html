@@ -1,5 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Welcome to Testbed Reservation!</h1>
-<h3>Maintain your testbed reservation here.</h3>
+<div class="container mt-4">
+    <h2>Testbed Reservation</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Contact Owner</th>
+                <th>Reserved</th>
+                <th>Fields</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for testbed in testbeds %}
+            <tr>
+                <td>{{ testbed.id }}</td>
+                <td>{{ testbed.name }}</td>
+                <td>{{ testbed.description }}</td>
+                <td>{{ testbed.contact_owner }}</td>
+                <td>{{ "Yes" if testbed.reserved else "No" }}</td>
+                <td>
+                    <ul>
+                        {% for field_name, field_value in testbed.fields.items() %}
+                        <li><strong>{{ field_name }}:</strong> {{ field_value }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    {% if not testbed.reserved %}
+                        <form action="{{ url_for('main.reserve_testbed', testbed_id=testbed.id) }}" method="post">
+                            <button type="submit" class="btn btn-success">Reserve</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('main.unreserve_testbed', testbed_id=testbed.id) }}" method="post">
+                            <button type="submit" class="btn btn-warning">Unreserve</button>
+                        </form>
+                    {% endif %}
+                </td>                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
